@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const Circle = require('./lib/circle');
 const fs = require('fs');
+const path = require('path');
 
 inquirer
     .prompt([
@@ -8,6 +9,13 @@ inquirer
             type: 'input',
             message: 'Enter up to 3 characters for the logo.',
             name: 'logo',
+            validate(input) {
+                if (input.length < 4) {
+                  return true;
+                }
+          
+                return 'Logo text must be 3 characters or less';
+              },
         },
         {
             type: 'input',
@@ -42,7 +50,7 @@ function sortData(data) {
     // console.log(data.shapeColor);
     if(data.logoShape == 'circle'){
         const circle = new Circle(data.logo, data.logoColor, data.shapeColor);
-        fs.writeFileSync('circle.svg', circle.render());
+        fs.writeFileSync(path.join(__dirname,"examples","circle.svg"), circle.render());
     }
 }
 
