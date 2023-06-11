@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const Circle = require('./lib/circle');
+const fs = require('fs');
 
 inquirer
     .prompt([
@@ -11,12 +12,12 @@ inquirer
         {
             type: 'input',
             message: 'What color do you want the text to be?',
-            name: 'logo-color',
+            name: 'logoColor',
         },
         {
             type: 'list',
             message: 'What shape should the logo be?',
-            name: 'logo-shape',
+            name: 'logoShape',
             choices: [
                 'circle',
                 'triangle',
@@ -26,13 +27,23 @@ inquirer
         {
             type: 'input',
             message: 'What color should the logo shape be?',
-            name: 'shape-color',
+            name: 'shapeColor',
         },
     ])
     .then((response) => 
-        console.log(response)
-        // circle("nvm", "blue", "white")
+        sortData(response)
     );
 
-const circle = new Circle('nvm', 'blue', 'white');
-circle.render();
+function sortData(data) {
+    // console.log(data);
+    // console.log(data.logo);
+    // console.log(data.logoColor);
+    // console.log(data.logoShape);
+    // console.log(data.shapeColor);
+    if(data.logoShape == 'circle'){
+        const circle = new Circle(data.logo, data.logoColor, data.shapeColor);
+        fs.writeFileSync('circle.svg', circle.render());
+    }
+}
+
+
