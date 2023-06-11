@@ -1,5 +1,7 @@
 const inquirer = require('inquirer');
 const Circle = require('./lib/circle');
+const Square = require('./lib/square');
+const Triangle = require('./lib/triangle');
 const fs = require('fs');
 const path = require('path');
 
@@ -51,6 +53,14 @@ function sortData(data) {
     if(data.logoShape == 'circle'){
         const circle = new Circle(data.logo, data.logoColor, data.shapeColor);
         fs.writeFileSync(path.join(__dirname,"examples","circle.svg"), circle.render());
+    }
+    if(data.logoShape == 'square'){
+        const square = new Square(data.logo, data.logoColor, data.shapeColor);
+        fs.writeFileSync(path.join(__dirname,"examples","square.svg"), square.render());
+    }
+    if(data.logoShape == 'triangle'){
+        const triangle = new Triangle(data.logo, data.logoColor, data.shapeColor);
+        fs.writeFileSync(path.join(__dirname,"examples","triangle.svg"), triangle.render());
     }
 }
 
